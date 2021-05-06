@@ -30,7 +30,6 @@ class InforCurve extends CustomPainter {
   }
 }
 
-
 class MainscreenCurve extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
@@ -40,11 +39,11 @@ class MainscreenCurve extends CustomPainter {
 
     var path = Path();
 
-    path.moveTo(0, size.height * 0.28);
-    path.quadraticBezierTo(size.width * 0.2, size.height * 0.25,
-        size.width * 0.5, size.height * 0.25);
-    path.quadraticBezierTo(size.width * 0.8, size.height * 0.25,
-        size.width * 1.0, size.height * 0.28);
+    path.moveTo(0, size.height * 0.40);
+    path.quadraticBezierTo(size.width * 0.2, size.height * 0.35,
+        size.width * 0.5, size.height * 0.35);
+    path.quadraticBezierTo(size.width * 0.8, size.height * 0.35,
+        size.width * 1.0, size.height * 0.40);
     path.lineTo(size.width, size.height);
     path.lineTo(0, size.height);
 
@@ -58,4 +57,3 @@ class MainscreenCurve extends CustomPainter {
     return true;
   }
 }
-

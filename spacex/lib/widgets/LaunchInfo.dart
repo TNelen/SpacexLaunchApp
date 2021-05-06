@@ -32,7 +32,7 @@ class LaunchInfoState extends State<LaunchInfo> {
   _setStatus(int status) {
     if (status == 200) {
       connection = CONNECTIONSTATE.SUCCESS;
-    } else if (status == 522 || status == 503) {
+    } else if (status == 502 || status == 503) {
       connection = CONNECTIONSTATE.TIMEOUT;
     } else {
       connection = CONNECTIONSTATE.LOADING;

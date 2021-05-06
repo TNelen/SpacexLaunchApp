@@ -58,12 +58,13 @@ class UpcomingLaunchTileState extends State<UpcomingLaunchTile> {
         onTap: () {
           //open info page
           showBarModalBottomSheet(
+            elevation: 5,
             context: context,
             builder: (context) => Container(
               child: UpcomingLaunchInfo(
                 launch: widget.launch,
               ),
-              color: Constants.white,
+              color: Constants.tile,
             ),
           );
         },

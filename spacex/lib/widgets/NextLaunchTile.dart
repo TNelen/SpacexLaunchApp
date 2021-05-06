@@ -46,7 +46,7 @@ class NextLaunchTileState extends State<NextLaunchTile> {
               child: UpcomingLaunchInfo(
                 launch: widget.launch,
               ),
-              color: Constants.white,
+              color: Constants.tile,
             ),
           );
         },
@@ -126,7 +126,7 @@ class NextLaunchTileState extends State<NextLaunchTile> {
                                                             fontFamily: 'Oxanium',
 
                             fontSize: 15,
-                            color: Constants.white.withOpacity(0.3),
+                            color: Constants.grey,
                             fontWeight: FontWeight.w300),
                       ),
                     ),
@@ -148,14 +148,14 @@ class NextLaunchTileState extends State<NextLaunchTile> {
                                 "Launch site: ",
                                 style: TextStyle(
                                     fontSize: 15,
-                                    color: Constants.white.withOpacity(0.3),
+                                    color: Constants.grey,
                                     fontWeight: FontWeight.w400),
                               ),
                               Text(
                                 widget.pad.name,
                                 style: TextStyle(
                                     fontSize: 15,
-                                    color: Constants.white.withOpacity(0.3),
+                                    color: Constants.grey,
                                     fontWeight: FontWeight.w400),
                               ),
                             ],
@@ -171,14 +171,14 @@ class NextLaunchTileState extends State<NextLaunchTile> {
                                 "Payload: ",
                                 style: TextStyle(
                                     fontSize: 15,
-                                    color: Constants.white.withOpacity(0.3),
+                                    color: Constants.grey,
                                     fontWeight: FontWeight.w400),
                               ),
                               Text(
                                 widget.payload.type,
                                 style: TextStyle(
                                     fontSize: 15,
-                                    color: Constants.white.withOpacity(0.3),
+                                    color: Constants.grey,
                                     fontWeight: FontWeight.w400),
                               ),
                             ],
@@ -195,14 +195,14 @@ class NextLaunchTileState extends State<NextLaunchTile> {
                                 "Rocket: ",
                                 style: TextStyle(
                                     fontSize: 15,
-                                    color: Constants.white.withOpacity(0.3),
+                                    color: Constants.grey,
                                     fontWeight: FontWeight.w400),
                               ),
                               Text(
                                 widget.rocket.name,
                                 style: TextStyle(
                                     fontSize: 15,
-                                    color: Constants.white.withOpacity(0.3),
+                                    color: Constants.grey,
                                     fontWeight: FontWeight.w400),
                               ),
                             ],
@@ -218,14 +218,14 @@ class NextLaunchTileState extends State<NextLaunchTile> {
                                 "Landing attempt: ",
                                 style: TextStyle(
                                     fontSize: 15,
-                                    color: Constants.white.withOpacity(0.3),
+                                    color: Constants.grey,
                                     fontWeight: FontWeight.w400),
                               ),
                               Text(
                                 widget.launch.recovery ? "Yes" : "No",
                                 style: TextStyle(
                                     fontSize: 15,
-                                    color: Constants.white.withOpacity(0.3),
+                                    color: Constants.grey,
                                     fontWeight: FontWeight.w400),
                               ),
                             ],

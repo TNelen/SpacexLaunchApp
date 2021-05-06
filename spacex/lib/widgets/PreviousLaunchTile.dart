@@ -42,7 +42,7 @@ class PreviousLaunchTileState extends State<PreviousLaunchTile> {
               child: PreviousLaunchInfo(
                 launch: widget.launch,
               ),
-              color: Colors.transparent,
+              color: Constants.tile,
             ),
           );
         },
