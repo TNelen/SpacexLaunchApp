@@ -3,15 +3,9 @@ import 'package:http/http.dart' as http;
 
 const baseUrl = "https://api.spacexdata.com/v4";
 
-enum CONNECTIONSTATE {
-    LOADING, TIMEOUT, SUCCESS
-  }
+enum CONNECTIONSTATE { LOADING, TIMEOUT, SUCCESS }
 
 class API {
-
-  
-
-
   static Future getUpcomingLaunches() {
     var url = baseUrl + "/launches/upcoming";
     return http.get(Uri.parse(url));

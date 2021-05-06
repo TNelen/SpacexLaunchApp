@@ -17,8 +17,11 @@ import 'data/Launchpad.dart';
 import 'data/Payload.dart';
 import 'data/Rocket.dart';
 
+import 'package:flutter/services.dart';
+
 void main() {
   runApp(MyApp());
+  SystemChrome.setEnabledSystemUIOverlays([]);
 }
 
 class MyApp extends StatelessWidget {
@@ -26,6 +29,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         backgroundColor: Constants.background,
@@ -56,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
   _setStatus(int status) {
     if (status == 200) {
       connection = CONNECTIONSTATE.SUCCESS;
-    } else if (status == 522 || status == 503) {
+    } else if (status == 502 || status == 503) {
       connection = CONNECTIONSTATE.TIMEOUT;
     } else {
       connection = CONNECTIONSTATE.LOADING;
@@ -67,8 +71,13 @@ class _MyHomePageState extends State<MyHomePage> {
     API.getUpcomingLaunches().then((response) {
       setState(() {
         print(response.statusCode);
-        Iterable list = json.decode(response.body);
-        upcomingLaunches = list.map((model) => Launch.fromJson(model)).toList();
+        if (response.statusCode == 502) {
+          _setStatus(response.statusCode);
+        } else {
+          Iterable list = json.decode(response.body);
+          upcomingLaunches =
+              list.map((model) => Launch.fromJson(model)).toList();
+        }
       });
     });
   }
@@ -115,13 +124,17 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  _getData() {
+    _getUpcomingLaunches();
+    _getPastLaunches();
+    _getNextLaunch();
+  }
+
   @override
   initState() {
     super.initState();
     connection = CONNECTIONSTATE.LOADING;
-    _getUpcomingLaunches();
-    _getPastLaunches();
-    _getNextLaunch();
+    _getData();
     refreshtimer = new Timer.periodic(seconds(1), (Timer t) => setState(() {}));
   }
 
@@ -172,7 +185,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 fit: BoxFit.contain,
                               ),
                               Text(
-                                " Launches",
+                                " Tracker",
                                 style: TextStyle(
                                     fontFamily: 'Spacex',
                                     fontSize: 25,
@@ -277,8 +290,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                       height: 120,
                                       child: Center(
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             Image.asset(
                                               "images/rocket.png",
@@ -287,7 +302,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                               color: Constants.accent,
                                               fit: BoxFit.contain,
                                             ),
-                                            SizedBox(height: 25,),
+                                            SizedBox(
+                                              height: 25,
+                                            ),
                                             Text(
                                               'Looks like something went wrong. Try restarting the app.',
                                               style: TextStyle(
@@ -296,31 +313,33 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   color: Constants.grey,
                                                   fontWeight: FontWeight.w600),
                                             ),
-                                            
                                           ],
                                         ),
                                       ),
                                     ),
-                              upcomingLaunches.length != null ? Container(
-                                  height: 110,
-                                  child: ListView.builder(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 10),
-                                    scrollDirection: Axis.vertical,
-                                    itemCount: upcomingLaunches.length - 1,
-                                    itemBuilder: (context, index) {
-                                      return UpcomingLaunchTile(
-                                        launch: upcomingLaunches[index + 1],
-                                        upcoming: true,
-                                      );
-                                    },
-                                  )) : 
-                                  Container(
+                              upcomingLaunches.length != null
+                                  ? Container(
+                                      height: 110,
+                                      child: ListView.builder(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 10),
+                                        scrollDirection: Axis.vertical,
+                                        itemCount: upcomingLaunches.length - 1,
+                                        itemBuilder: (context, index) {
+                                          return UpcomingLaunchTile(
+                                            launch: upcomingLaunches[index + 1],
+                                            upcoming: true,
+                                          );
+                                        },
+                                      ))
+                                  : Container(
                                       height: 120,
                                       child: Center(
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             Image.asset(
                                               "images/rocket.png",
@@ -329,7 +348,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                               color: Constants.accent,
                                               fit: BoxFit.contain,
                                             ),
-                                            SizedBox(height: 25,),
+                                            SizedBox(
+                                              height: 25,
+                                            ),
                                             Text(
                                               'There are no upcoming launches scheduled, come back later.',
                                               style: TextStyle(
@@ -338,7 +359,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   color: Constants.grey,
                                                   fontWeight: FontWeight.w600),
                                             ),
-                                            
                                           ],
                                         ),
                                       ),
@@ -350,67 +370,153 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ]),
                   )
-                : Stack(children: [
-                    Container(
-                      height: 100,
-                      width: MediaQuery.of(context).size.width,
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                : (connection == CONNECTIONSTATE.LOADING)
+                    ? Stack(children: [
+                        Container(
+                          height: 100,
+                          width: MediaQuery.of(context).size.width,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "SpaceX ",
+                                  style: TextStyle(
+                                      fontFamily: 'Spacex',
+                                      fontSize: 25,
+                                      color: Constants.white,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                Image.asset(
+                                  "images/rocket.png",
+                                  width: 20,
+                                  height: 20,
+                                  color: Constants.accent,
+                                  fit: BoxFit.contain,
+                                ),
+                                Text(
+                                  " Tracker",
+                                  style: TextStyle(
+                                      fontFamily: 'Spacex',
+                                      fontSize: 25,
+                                      color: Constants.white,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ]),
+                        ),
+                        Center(
+                            child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            GlowingProgressIndicator(
+                              child: Image.asset(
+                                "images/rocket.png",
+                                width: 60,
+                                height: 60,
+                                color: Constants.accent,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
                             Text(
-                              "SpaceX ",
+                              "Loading launches",
                               style: TextStyle(
                                   fontFamily: 'Spacex',
-                                  fontSize: 25,
+                                  fontSize: 15,
                                   color: Constants.white,
                                   fontWeight: FontWeight.w600),
                             ),
-                            Image.asset(
-                              "images/rocket.png",
-                              width: 20,
-                              height: 20,
-                              color: Constants.accent,
-                              fit: BoxFit.contain,
+                          ],
+                        )),
+                      ])
+                    : Stack(children: [
+                        Container(
+                          height: 100,
+                          width: MediaQuery.of(context).size.width,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "SpaceX ",
+                                  style: TextStyle(
+                                      fontFamily: 'Spacex',
+                                      fontSize: 25,
+                                      color: Constants.white,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                Image.asset(
+                                  "images/rocket.png",
+                                  width: 20,
+                                  height: 20,
+                                  color: Constants.accent,
+                                  fit: BoxFit.contain,
+                                ),
+                                Text(
+                                  " Tracker",
+                                  style: TextStyle(
+                                      fontFamily: 'Spacex',
+                                      fontSize: 25,
+                                      color: Constants.white,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ]),
+                        ),
+                        Center(
+                            child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GlowingProgressIndicator(
+                              child: Image.asset(
+                                "images/rocket.png",
+                                width: 60,
+                                height: 60,
+                                color: Constants.accent,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
                             ),
                             Text(
-                              " Launches",
+                              "api.spacexdata.com is not reachable.",
                               style: TextStyle(
                                   fontFamily: 'Spacex',
-                                  fontSize: 25,
+                                  fontSize: 15,
                                   color: Constants.white,
                                   fontWeight: FontWeight.w600),
+                              textAlign: TextAlign.center,
                             ),
-                          ]),
-                    ),
-                    Center(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        GlowingProgressIndicator(
-                          child: Image.asset(
-                            "images/rocket.png",
-                            width: 60,
-                            height: 60,
-                            color: Constants.accent,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "Loading launches",
-                          style: TextStyle(
-                              fontFamily: 'Spacex',
-                              fontSize: 15,
-                              color: Constants.white,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ],
-                    )),
-                  ]),
+                            Text(
+                              "Please retry or come back later.",
+                              style: TextStyle(
+                                  fontFamily: 'Spacex',
+                                  fontSize: 15,
+                                  color: Constants.white,
+                                  fontWeight: FontWeight.w600),
+                              textAlign: TextAlign.center,
+                            ),
+                            TextButton(
+                              child: Text(
+                                "Retry",
+                                style: TextStyle(
+                                    fontFamily: 'Spacex',
+                                    fontSize: 15,
+                                    color: Constants.accent,
+                                    fontWeight: FontWeight.w600),
+                                textAlign: TextAlign.center,
+                              ),
+                              onPressed: () {
+                                _getData();
+                              },
+                            )
+                          ],
+                        )),
+                      ]),
           ]),
     );
   }
