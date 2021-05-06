@@ -2,10 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:spacex/data/Launch.dart';
-import 'package:intl/intl.dart';
-import 'package:spacex/widgets/LaunchInfo.dart';
 import 'package:spacex/widgets/PreviousLaunchInfo.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../Constants.dart';
 

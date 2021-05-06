@@ -1,11 +1,8 @@
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:duration/duration.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import 'package:spacex/Queries/API.dart';
 import 'package:spacex/data/Launch.dart';
@@ -15,7 +12,6 @@ import 'package:spacex/data/Payload.dart';
 import 'package:spacex/data/Rocket.dart';
 import 'package:spacex/data/Tminus.dart';
 import 'package:spacex/widgets/Curves.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../Constants.dart';
 
