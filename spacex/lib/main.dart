@@ -21,7 +21,6 @@ import 'package:flutter/services.dart';
 
 void main() {
   runApp(MyApp());
-  SystemChrome.setEnabledSystemUIOverlays([]);
 }
 
 class MyApp extends StatelessWidget {

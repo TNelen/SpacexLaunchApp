@@ -153,7 +153,7 @@ class NextLaunchTileState extends State<NextLaunchTile> {
                       children: [
                         Container(
                           width: 216,
-                          height: 20,
+                          height: 18,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -176,7 +176,7 @@ class NextLaunchTileState extends State<NextLaunchTile> {
                         ),
                         Container(
                           width: 216,
-                          height: 20,
+                          height: 18,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -199,7 +199,7 @@ class NextLaunchTileState extends State<NextLaunchTile> {
                         ),
                         Container(
                           width: 216,
-                          height: 20,
+                          height: 18,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -222,7 +222,7 @@ class NextLaunchTileState extends State<NextLaunchTile> {
                         ),
                         Container(
                           width: 216,
-                          height: 20,
+                          height: 18,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -246,7 +246,7 @@ class NextLaunchTileState extends State<NextLaunchTile> {
                       ]),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
                 Card(
                   elevation: 0,
@@ -270,7 +270,7 @@ class NextLaunchTileState extends State<NextLaunchTile> {
                   ),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 8,
                 ),
                 widget.launch.webcast != null
                     ? InkWell(
