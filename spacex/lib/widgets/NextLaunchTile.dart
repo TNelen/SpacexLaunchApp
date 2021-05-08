@@ -287,10 +287,12 @@ class NextLaunchTileState extends State<NextLaunchTile> {
                                 "Webcast: ",
                                 style: TextStyle(
                                     fontSize: 15,
-                                    color: Constants.grey	,
+                                    color: Constants.grey,
                                     fontWeight: FontWeight.w600),
                               ),
-                              SizedBox(width: 10,),
+                              SizedBox(
+                                width: 10,
+                              ),
                               Icon(
                                 Icons.ondemand_video_outlined,
                                 size: 17,
