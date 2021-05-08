@@ -7,6 +7,7 @@ import 'package:spacex/data/Launchpad.dart';
 import 'package:spacex/data/Payload.dart';
 import 'package:spacex/data/Rocket.dart';
 import 'package:spacex/data/Tminus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../Constants.dart';
 import 'UpcomingLaunchInfo.dart';
@@ -28,6 +29,19 @@ class NextLaunchTile extends StatefulWidget {
 class NextLaunchTileState extends State<NextLaunchTile> {
   @override
   void initState() {}
+
+  Future<void> _launchInBrowser(String url) async {
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceSafariVC: false,
+        forceWebView: false,
+        headers: <String, String>{'my_header_key': 'my_header_value'},
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,8 +137,7 @@ class NextLaunchTileState extends State<NextLaunchTile> {
                       child: Text(
                         "#" + widget.launch.flight_number.toString(),
                         style: TextStyle(
-                                                            fontFamily: 'Oxanium',
-
+                            fontFamily: 'Oxanium',
                             fontSize: 15,
                             color: Constants.grey,
                             fontWeight: FontWeight.w300),
@@ -184,7 +197,6 @@ class NextLaunchTileState extends State<NextLaunchTile> {
                             ],
                           ),
                         ),
-                        
                         Container(
                           width: 216,
                           height: 20,
@@ -233,7 +245,9 @@ class NextLaunchTileState extends State<NextLaunchTile> {
                         ),
                       ]),
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 Card(
                   elevation: 0,
                   color: Constants.darkgrey,
@@ -255,6 +269,41 @@ class NextLaunchTileState extends State<NextLaunchTile> {
                     ),
                   ),
                 ),
+                SizedBox(
+                  height: 10,
+                ),
+                widget.launch.webcast != null
+                    ? InkWell(
+                        onTap: () {
+                          _launchInBrowser(widget.launch.webcast);
+                        },
+                        child: Container(
+                          width: 216,
+                          height: 15,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Webcast: ",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: Constants.grey	,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              SizedBox(width: 10,),
+                              Icon(
+                                Icons.ondemand_video_outlined,
+                                size: 17,
+                                color: Constants.accent,
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    : SizedBox(
+                        width: 216,
+                        height: 15,
+                      )
               ],
             ),
           ),

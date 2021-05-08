@@ -214,6 +214,27 @@ class UpcomingLaunchInfoState extends State<UpcomingLaunchInfo> {
                               height: 10,
                             ),
                             Text(
+                              "Description",
+                              style: TextStyle(
+                                  fontFamily: 'Oxanium',
+                                  fontSize: 17,
+                                  color: Constants.white,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              widget.launch.details != null ? widget.launch.details : "Not avaialble yet" ,
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: Constants.grey,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Text(
                               "Launch Site",
                               style: TextStyle(
                                   fontFamily: 'Oxanium',

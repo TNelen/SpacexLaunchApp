@@ -483,7 +483,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               height: 10,
                             ),
                             Text(
-                              "api.spacexdata.com is not reachable.",
+                              "Whoops something went wrong!",
                               style: TextStyle(
                                   fontFamily: 'Spacex',
                                   fontSize: 15,
