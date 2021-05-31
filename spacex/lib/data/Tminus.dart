@@ -12,9 +12,10 @@ class Tminus {
 
     if (launchtime.isAfter(now)) {
       Duration difference = launchtime.difference(now);
-      return prettyDuration(difference, abbreviated: true, delimiter: ": ");
+      return "T -  " +
+          prettyDuration(difference, abbreviated: true, delimiter: ": ");
     } else {
-      return "0";
+      return "Liftoff";
     }
   }
 
@@ -24,10 +25,13 @@ class Tminus {
 
     if (launchtime.isAfter(now)) {
       Duration difference = launchtime.difference(now);
-      return prettyDuration(difference,
-          abbreviated: true, delimiter: ": ", tersity: DurationTersity.minute);
+      return "T -  " +
+          prettyDuration(difference,
+              abbreviated: true,
+              delimiter: ": ",
+              tersity: DurationTersity.minute);
     } else {
-      return "0";
+      return "Liftoff";
     }
   }
 }

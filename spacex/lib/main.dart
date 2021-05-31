@@ -217,6 +217,32 @@ class _MyHomePageState extends State<MyHomePage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
+                                      'Upcoming',
+                                      style: TextStyle(
+                                          fontFamily: 'Oxanium',
+                                          fontSize: 17,
+                                          color: Constants.white,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    Card(
+                                      color: Constants.tile,
+                                      child: Padding(
+                                        padding: EdgeInsets.all(3),
+                                        child: Text(
+                                          upcomingLaunches.length.toString(),
+                                          style: TextStyle(
+                                              fontFamily: 'Oxanium',
+                                              fontSize: 17,
+                                              color: Constants.grey,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                    ),
+                                  ]),
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
                                       'Previous',
                                       style: TextStyle(
                                           fontFamily: 'Oxanium',
@@ -239,34 +265,54 @@ class _MyHomePageState extends State<MyHomePage> {
                                       ),
                                     ),
                                   ]),
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Upcoming',
-                                      style: TextStyle(
-                                          fontFamily: 'Oxanium',
-                                          fontSize: 17,
-                                          color: Constants.white,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    Card(
-                                      color: Constants.tile,
-                                      child: Padding(
-                                        padding: EdgeInsets.all(3),
-                                        child: Text(
-                                          upcomingLaunches.length.toString(),
-                                          style: TextStyle(
-                                              fontFamily: 'Oxanium',
-                                              fontSize: 17,
-                                              color: Constants.grey,
-                                              fontWeight: FontWeight.w600),
+                            ],
+                            views: [
+                              upcomingLaunches.length != null
+                                  ? Container(
+                                      height: 110,
+                                      child: ListView.builder(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 10),
+                                        scrollDirection: Axis.vertical,
+                                        itemCount: upcomingLaunches.length - 1,
+                                        itemBuilder: (context, index) {
+                                          return UpcomingLaunchTile(
+                                            launch: upcomingLaunches[index + 1],
+                                            upcoming: true,
+                                          );
+                                        },
+                                      ))
+                                  : Container(
+                                      height: 120,
+                                      child: Center(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Image.asset(
+                                              "images/rocket.png",
+                                              width: 50,
+                                              height: 50,
+                                              color: Constants.accent,
+                                              fit: BoxFit.contain,
+                                            ),
+                                            SizedBox(
+                                              height: 25,
+                                            ),
+                                            Text(
+                                              'There are no upcoming launches scheduled, come back later.',
+                                              style: TextStyle(
+                                                  fontFamily: 'Oxanium',
+                                                  fontSize: 12,
+                                                  color: Constants.grey,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
-                                  ])
-                            ],
-                            views: [
                               pastLaunches.length != 0
                                   ? Container(
                                       height: 120,
@@ -306,52 +352,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                             ),
                                             Text(
                                               'Looks like something went wrong. Try restarting the app.',
-                                              style: TextStyle(
-                                                  fontFamily: 'Oxanium',
-                                                  fontSize: 12,
-                                                  color: Constants.grey,
-                                                  fontWeight: FontWeight.w600),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                              upcomingLaunches.length != null
-                                  ? Container(
-                                      height: 110,
-                                      child: ListView.builder(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 10),
-                                        scrollDirection: Axis.vertical,
-                                        itemCount: upcomingLaunches.length - 1,
-                                        itemBuilder: (context, index) {
-                                          return UpcomingLaunchTile(
-                                            launch: upcomingLaunches[index + 1],
-                                            upcoming: true,
-                                          );
-                                        },
-                                      ))
-                                  : Container(
-                                      height: 120,
-                                      child: Center(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Image.asset(
-                                              "images/rocket.png",
-                                              width: 50,
-                                              height: 50,
-                                              color: Constants.accent,
-                                              fit: BoxFit.contain,
-                                            ),
-                                            SizedBox(
-                                              height: 25,
-                                            ),
-                                            Text(
-                                              'There are no upcoming launches scheduled, come back later.',
                                               style: TextStyle(
                                                   fontFamily: 'Oxanium',
                                                   fontSize: 12,

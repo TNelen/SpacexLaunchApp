@@ -84,10 +84,23 @@ class NextLaunchTileState extends State<NextLaunchTile> {
                               height: 80,
                               fit: BoxFit.contain,
                             )
-                          : SizedBox(
-                              width: 80,
-                              height: 80,
-                            ),
+                          : Stack(alignment: Alignment.center, children: [
+                              Container(
+                                width: 60.0,
+                                height: 60.0,
+                                decoration: new BoxDecoration(
+                                  color: Constants.darkgrey,
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                              Image.asset(
+                                "images/rocket.png",
+                                height: 40,
+                                width: 40,
+                                color: Constants.accent,
+                                fit: BoxFit.contain,
+                              )
+                            ]),
                     ),
                     SizedBox(
                       width: 10,
@@ -234,7 +247,11 @@ class NextLaunchTileState extends State<NextLaunchTile> {
                                     fontWeight: FontWeight.w400),
                               ),
                               Text(
-                                widget.launch.recovery ? "Yes" : "No",
+                                widget.launch.recovery == true
+                                    ? "Yes"
+                                    : widget.launch.recovery == null
+                                        ? "Unknown"
+                                        : "No",
                                 style: TextStyle(
                                     fontSize: 15,
                                     color: Constants.grey,
@@ -257,8 +274,7 @@ class NextLaunchTileState extends State<NextLaunchTile> {
                     child: Container(
                       width: 210,
                       child: Text(
-                        "T -  " +
-                            Tminus().calculateTminus(widget.launch.date_utc),
+                        Tminus().calculateTminus(widget.launch.date_utc),
                         style: TextStyle(
                             fontFamily: 'Oxanium',
                             fontSize: 15,

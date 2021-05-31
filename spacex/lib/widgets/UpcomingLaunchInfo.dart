@@ -95,8 +95,7 @@ class UpcomingLaunchInfoState extends State<UpcomingLaunchInfo> {
               child: Text(
                 "#" + widget.launch.flight_number.toString(),
                 style: TextStyle(
-                                                    fontFamily: 'Oxanium',
-
+                    fontFamily: 'Oxanium',
                     fontSize: 15,
                     color: Constants.grey,
                     fontWeight: FontWeight.w700),
@@ -192,9 +191,8 @@ class UpcomingLaunchInfoState extends State<UpcomingLaunchInfo> {
                             child: Container(
                               width: 300,
                               child: AutoSizeText(
-                                "T -  " +
-                                    Tminus().calculateTminusNoSec(
-                                        widget.launch.date_utc),
+                                Tminus().calculateTminusNoSec(
+                                    widget.launch.date_utc),
                                 maxLines: 1,
                                 style: TextStyle(
                                     fontFamily: 'Oxanium',
@@ -225,7 +223,9 @@ class UpcomingLaunchInfoState extends State<UpcomingLaunchInfo> {
                               height: 10,
                             ),
                             Text(
-                              widget.launch.details != null ? widget.launch.details : "Not avaialble yet" ,
+                              widget.launch.details != null
+                                  ? widget.launch.details
+                                  : "Not avaialble yet",
                               style: TextStyle(
                                   fontSize: 12,
                                   color: Constants.grey,
@@ -318,32 +318,32 @@ class UpcomingLaunchInfoState extends State<UpcomingLaunchInfo> {
                     ),
                   ))
               : Center(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        GlowingProgressIndicator(
-                          child: Image.asset(
-                            "images/rocket.png",
-                            width: 60,
-                            height: 60,
-                            color: Constants.accent,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "Loading launch info",
-                          style: TextStyle(
-                              fontFamily: 'Spacex',
-                              fontSize: 15,
-                              color: Constants.white,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ],
-                    )),
+                  child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GlowingProgressIndicator(
+                      child: Image.asset(
+                        "images/rocket.png",
+                        width: 60,
+                        height: 60,
+                        color: Constants.accent,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "Loading launch info",
+                      style: TextStyle(
+                          fontFamily: 'Spacex',
+                          fontSize: 15,
+                          color: Constants.white,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                )),
         ]);
   }
 }
