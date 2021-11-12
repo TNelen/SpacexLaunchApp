@@ -225,7 +225,7 @@ class UpcomingLaunchInfoState extends State<UpcomingLaunchInfo> {
                             Text(
                               widget.launch.details != null
                                   ? widget.launch.details
-                                  : "Not avaialble yet",
+                                  : "Not available yet",
                               style: TextStyle(
                                   fontSize: 12,
                                   color: Constants.grey,

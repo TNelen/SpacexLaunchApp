@@ -187,7 +187,9 @@ class PreviousLaunchInfoState extends State<PreviousLaunchInfo> {
                                 height: 10,
                               ),
                               Text(
-                                widget.launch.details,
+                                widget.launch.details != null
+                                    ? widget.launch.details
+                                    : "Not available yet",
                                 style: TextStyle(
                                     fontSize: 12,
                                     color: Constants.grey,
